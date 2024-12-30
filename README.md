@@ -1,0 +1,219 @@
+# Inventory and Sales Management System - DistribuSoft
+
+## Introduction
+
+DistribuSoft is a management system designed to streamline the administration of inventory and sales for small and
+medium-sized businesses. It enables businesses to manage members, albums, purchases, and branches efficiently, using a
+modern and intuitive web interface.
+
+## Project Objectives
+
+Develop a web application to:
+
+- Manage CRUD operations for key entities: members, albums, purchases, and branches.
+- Provide an API endpoint for external queries using tools like Postman.
+- Normalize the database schema to maintain data integrity and consistency.
+
+## Technical Requirements
+
+### Required Technologies
+
+- **Java**
+- **Spring Boot 3.2+**
+- **MySQL**
+- **Thymeleaf**
+- **Maven**
+- **Bootstrap**
+
+### Main Dependencies
+
+```xml
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>com.mysql</groupId>
+        <artifactId>mysql-connector-j</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <optional>true</optional>
+    </dependency>
+</dependencies>
+```
+
+## Project Structure
+
+### 1. Data Model
+
+1. **Branch**
+
+    - `branch_id` (Primary Key)
+    - `branch_description` (String)
+
+2. **Membership Type**
+
+    - `membership_type_id` (Primary Key)
+    - `membership_type_description` (String)
+
+3. **Gender**
+
+    - `gender_id` (Primary Key)
+    - `gender_description` (String)
+
+4. **Member**
+
+    - `member_id` (Primary Key)
+    - `first_name` (String)
+    - `last_name` (String)
+    - `email` (String)
+    - `birth_date` (Date)
+    - Relationships: `branch_id`, `membership_type_id`, `gender_id`
+
+5. **Album**
+
+    - `album_id` (Primary Key)
+    - `artist_name` (String)
+    - `album_title` (String)
+    - `duration` (String)
+    - `music_genre` (String)
+    - `label` (String)
+    - `stock` (Integer)
+    - `price` (Integer)
+
+6. **Member Purchase**
+
+    - `member_purchase_id` (Primary Key)
+    - Relationships: `member_id`, `album_id`, `branch_id`
+    - `quantity` (Integer)
+
+7. **Seller**
+
+    - `seller_id` (Primary Key)
+    - `first_name` (String)
+    - `last_name` (String)
+    - Relationship: `branch_id`
+
+---
+
+### 2. Frontend Development (Thymeleaf)
+
+#### 2.1 Required Views
+
+1. **Purchase Dashboard** (`/purchases`)
+
+    - Overview of all purchases:
+        - Member name.
+        - Membership type.
+        - Album title.
+        - Quantity purchased.
+        - Total price of the purchase.
+        - Branch where the purchase was made.
+    - Pagination included.
+    - Button to create, update, or delete purchases.
+
+2. **Purchase Details** (`/purchases/{id}`)
+
+    - Detailed view for a single purchase:
+        - Member information:
+            - Name, email, and membership type.
+        - Album details:
+            - Title, artist, price, and music genre.
+        - Purchase details:
+            - Quantity, total price, and branch.
+
+
+#### 2.2 API REST
+
+1. **Get Purchases**
+
+   ```http
+   GET /api/purchases
+   Response:
+   {
+       "purchases": [
+           {
+               "purchaseId": 1,
+               "memberName": "John Doe",
+               "membershipType": "Premium",
+               "albumTitle": "Thriller",
+               "quantity": 2,
+               "totalPrice": 39.98,
+               "branch": "Main Branch"
+           }
+       ]
+   }
+   ```
+
+2. **Get Purchase Details**
+
+   ```http
+   GET /api/purchases/{id}
+   Response:
+   {
+       "purchaseId": 1,
+       "member": {
+           "name": "John Doe",
+           "email": "john.doe@example.com",
+           "membershipType": "Premium"
+       },
+       "album": {
+           "title": "Thriller",
+           "artist": "Michael Jackson",
+           "price": 19.99,
+           "musicGenre": "Pop"
+       },
+       "details": {
+           "quantity": 2,
+           "totalPrice": 39.98,
+           "branch": "Main Branch"
+       }
+   }
+   ```
+
+---
+
+### 3. SQL Queries
+
+1. **Purchase Analysis**
+
+    - Total purchases and revenue per branch.
+
+2. **Top Purchased Albums**
+
+    - Most purchased albums with total revenue.
+
+3. **Member Purchase History**
+
+    - List of all purchases made by each member, grouped by membership type.
+
+4. **Branch-wise Album Sales**
+
+    - Quantity of albums sold per branch, grouped by album.
+
+5. **Revenue by Membership Type**
+
+    - Total revenue generated by each membership type.
+---
+
+## Deliverables
+
+1. Source code for the application.
+2. Database schema and seed data.
+3. API documentation.
+4. User guide for deployment and usage.
+
+---
+
