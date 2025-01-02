@@ -9,9 +9,8 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
+@Entity(name = "Seller")
 @Table(name = "seller")
-
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

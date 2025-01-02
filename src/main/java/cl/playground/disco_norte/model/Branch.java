@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "brach")
+@Table(name = "branch")
 public class Branch {
 
     @Id

@@ -19,17 +19,16 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long memberId;
 
-    @Column(length = 50, nullable = false)
+    @Column(name= "first_name", length = 50, nullable = false)
     private String firstName;
 
-    @Column(length = 100, nullable = false)
-
+    @Column(name= "last_name", length = 100, nullable = false)
     private String lastName;
 
-    @Column(length = 100, nullable = false)
+    @Column(name = "email", length = 100, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
     @ManyToOne

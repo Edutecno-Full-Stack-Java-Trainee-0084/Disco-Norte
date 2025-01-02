@@ -20,7 +20,7 @@ public class Gender {
     private Long genderId;
 
     @Column(name = "gender_description", length = 50, nullable = false)
-    private String genderDescription;
+    private String gender_description;
 
     @OneToMany(mappedBy = "gender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Member> members = new ArrayList<>();

@@ -1,64 +1,67 @@
--- Creacion de tablas
+-- disco-norte
+create database disco_norte;
+use disco_norte;
+
+-- init.sql
+
 CREATE TABLE branch (
-    branch_id SERIAL PRIMARY KEY,
-    branch_description VARCHAR(50) NOT NULL
+                        branch_id SERIAL PRIMARY KEY,
+                        branch_description VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE membership_type (
-    membership_type_id SERIAL PRIMARY KEY,
-    membership_type_description VARCHAR(50) NOT NULL
+                                 membership_type_id SERIAL PRIMARY KEY,
+                                 membership_type_description VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE gender (
-    gender_id SERIAL PRIMARY KEY,
-    gender_description VARCHAR(50) NOT NULL
+                        gender_id SERIAL PRIMARY KEY,
+                        gender_description VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE member (
-    member_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    birth_date DATE NOT NULL,
-    branch_id BIGINT UNSIGNED NOT NULL,
-    membership_type_id BIGINT UNSIGNED NOT NULL,
-    gender_id BIGINT UNSIGNED NOT NULL,
-    FOREIGN KEY (branch_id) REFERENCES branch (branch_id),
-    FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
-    FOREIGN KEY (membership_type_id) REFERENCES membership_type (membership_type_id)
+                        member_id SERIAL PRIMARY KEY,
+                        first_name VARCHAR(50) NOT NULL,
+                        last_name VARCHAR(100) NOT NULL,
+                        email VARCHAR(100) NOT NULL,
+                        birth_date DATE NOT NULL,
+                        branch_id BIGINT UNSIGNED NOT NULL,
+                        membership_type_id BIGINT UNSIGNED NOT NULL,
+                        gender_id BIGINT UNSIGNED NOT NULL,
+                        FOREIGN KEY (branch_id) REFERENCES branch (branch_id),
+                        FOREIGN KEY (gender_id) REFERENCES gender (gender_id),
+                        FOREIGN KEY (membership_type_id) REFERENCES membership_type (membership_type_id)
 );
 
 CREATE TABLE album (
-    album_id SERIAL PRIMARY KEY,
-    artist_name VARCHAR(100) NOT NULL,
-    album_title VARCHAR(200) NOT NULL,
-    duration VARCHAR(50) NOT NULL,
-    music_genre VARCHAR(50) NOT NULL,
-    label VARCHAR(50) NOT NULL,
-    stock INT NOT NULL,
-    price INT NOT NULL
+                       album_id SERIAL PRIMARY KEY,
+                       artist_name VARCHAR(100) NOT NULL,
+                       album_title VARCHAR(200) NOT NULL,
+                       duration VARCHAR(50) NOT NULL,
+                       music_genre VARCHAR(50) NOT NULL,
+                       label VARCHAR(50) NOT NULL,
+                       stock INT NOT NULL,
+                       price INT NOT NULL
 );
 
 CREATE TABLE member_purchase (
-    member_purchase_id SERIAL PRIMARY KEY,
-    member_id BIGINT UNSIGNED NOT NULL,
-    album_id BIGINT UNSIGNED NOT NULL,
-    quantity INT NOT NULL,
-    branch_id BIGINT UNSIGNED NOT NULL,
-    FOREIGN KEY (member_id) REFERENCES member (member_id),
-    FOREIGN KEY (album_id) REFERENCES album (album_id),
-    FOREIGN KEY (branch_id) REFERENCES branch (branch_id)
+                                 member_purchase_id SERIAL PRIMARY KEY,
+                                 member_id BIGINT UNSIGNED NOT NULL,
+                                 album_id BIGINT UNSIGNED NOT NULL,
+                                 quantity INT NOT NULL,
+                                 branch_id BIGINT UNSIGNED NOT NULL,
+                                 FOREIGN KEY (member_id) REFERENCES member (member_id),
+                                 FOREIGN KEY (album_id) REFERENCES album (album_id),
+                                 FOREIGN KEY (branch_id) REFERENCES branch (branch_id)
 );
 
 CREATE TABLE seller (
-    seller_id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(100) NOT NULL,
-    branch_id BIGINT UNSIGNED NOT NULL,
-    FOREIGN KEY (branch_id) REFERENCES branch (branch_id)
+                        seller_id SERIAL PRIMARY KEY,
+                        first_name VARCHAR(50) NOT NULL,
+                        last_name VARCHAR(100) NOT NULL,
+                        branch_id BIGINT UNSIGNED NOT NULL,
+                        FOREIGN KEY (branch_id) REFERENCES branch (branch_id)
 );
-
--- Inserciones
 
 -- Branches
 INSERT INTO branch (branch_description) VALUES ('Main Branch');
@@ -183,9 +186,9 @@ SELECT
     SUM(mp.quantity * a.price) AS total_revenue
 FROM
     member_purchase mp
-JOIN
+        JOIN
     branch b ON mp.branch_id = b.branch_id
-JOIN
+        JOIN
     album a ON mp.album_id = a.album_id
 GROUP BY
     b.branch_description;
@@ -200,7 +203,7 @@ SELECT
     SUM(mp.quantity * a.price) AS total_revenue
 FROM
     member_purchase mp
-JOIN
+        JOIN
     album a ON mp.album_id = a.album_id
 GROUP BY
     a.album_id, a.album_title, a.artist_name
@@ -219,11 +222,11 @@ SELECT
     (mp.quantity * a.price) AS total_spent
 FROM
     member_purchase mp
-JOIN
+        JOIN
     member m ON mp.member_id = m.member_id
-JOIN
+        JOIN
     album a ON mp.album_id = a.album_id
-JOIN
+        JOIN
     membership_type mt ON m.membership_type_id = mt.membership_type_id
 ORDER BY
     mt.membership_type_description,
@@ -238,9 +241,9 @@ SELECT
     SUM(mp.quantity) AS total_quantity_sold
 FROM
     member_purchase mp
-JOIN
+        JOIN
     branch b ON mp.branch_id = b.branch_id
-JOIN
+        JOIN
     album a ON mp.album_id = a.album_id
 GROUP BY
     b.branch_description, a.album_title
@@ -255,11 +258,11 @@ SELECT
     SUM(mp.quantity * a.price) AS total_revenue
 FROM
     member_purchase mp
-JOIN
+        JOIN
     member m ON mp.member_id = m.member_id
-JOIN
+        JOIN
     membership_type mt ON m.membership_type_id = mt.membership_type_id
-JOIN
+        JOIN
     album a ON mp.album_id = a.album_id
 GROUP BY
     mt.membership_type_description
