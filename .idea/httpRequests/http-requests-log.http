@@ -1,0 +1,47 @@
+GET http://localhost:8080/api/purchase
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-01-02T221421.404.json
+
+###
+
+GET http://localhost:8080/api/purchase/simplified?page=11&size=74
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-01-02T221350.200.json
+
+###
+
+GET http://localhost:8080/api/purchase/1?page=76&size=62
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-01-02T221253.500.json
+
+###
+
+GET http://localhost:8080/api/purchase/simplified?page=72&size=36
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-01-02T221206.200.json
+
+###
+
+GET http://localhost:8080/api/purchase
+Content-Type: application/json
+User-Agent: IntelliJ HTTP Client/IntelliJ IDEA 2024.3
+Accept-Encoding: br, deflate, gzip, x-gzip
+Accept: */*
+
+<> 2025-01-02T221047.404.json
+
+###
+

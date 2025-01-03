@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, Long> {
 
     @Query(value = """
-            SELECT\s
+            SELECT
                 mp.member_purchase_id AS purchase_id,
                 CONCAT(m.first_name, ' ', m.last_name) AS member_name,
                 mt.membership_type_description AS membership_type,
@@ -21,19 +22,19 @@ public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, 
                 mp.quantity,
                 (mp.quantity * a.price) AS total_price,
                 b.branch_description AS branch
-            FROM\s
+            FROM
                 member_purchase mp
-            JOIN\s
+            JOIN
                 member m ON mp.member_id = m.member_id
-            JOIN\s
+            JOIN
                 membership_type mt ON m.membership_type_id = mt.membership_type_id
-            JOIN\s
+            JOIN
                 album a ON mp.album_id = a.album_id
-            JOIN\s
+            JOIN
                 branch b ON mp.branch_id = b.branch_id
-            ORDER BY\s
+            ORDER BY
                 mp.member_purchase_id
-            LIMIT\s
+            LIMIT
                 10 OFFSET 0;
             """, nativeQuery = true)
     Page<MemberPurchase> findAllMemberPurchaseDetails(Pageable pageable);
@@ -62,8 +63,8 @@ public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, 
             JOIN\s
                 branch b ON mp.branch_id = b.branch_id
             WHERE\s
-                mp.member_purchase_id = {id};
+                mp.member_purchase_id = :id;
             """, nativeQuery = true)
-    Page<MemberPurchase> findMemberPurchaseDetailsById(Pageable pageable);
+   MemberPurchase findMemberPurchaseDetailsById(@Param("id") Long id);
 
 }

@@ -3,7 +3,6 @@ package cl.playground.disco_norte.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 @Getter
 @Setter
 @ToString
