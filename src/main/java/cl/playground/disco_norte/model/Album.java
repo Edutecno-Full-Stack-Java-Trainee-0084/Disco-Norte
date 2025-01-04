@@ -8,26 +8,26 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "purchases")  // Excluimos la colección
 @Entity
 @Table(name = "album")
 public class Album {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "album_id", nullable = false)
-    private Long album_id;
+    private Long albumId;  // Cambiado a camelCase
 
     @Column(name = "artist_name", length = 100, nullable = false)
-    private String artist_name;
+    private String artistName;  // Cambiado a camelCase
 
     @Column(name = "album_title", length = 200, nullable = false)
-    private String album_title;
+    private String albumTitle;  // Cambiado a camelCase
 
     @Column(name = "duration", length = 50, nullable = false)
     private String duration;
 
     @Column(name = "music_genre", length = 50, nullable = false)
-    private String music_genre;
+    private String musicGenre;  // Cambiado a camelCase
 
     @Column(name = "label", length = 50, nullable = false)
     private String label;

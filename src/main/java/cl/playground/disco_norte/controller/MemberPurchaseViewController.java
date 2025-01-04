@@ -27,7 +27,7 @@ public class MemberPurchaseViewController {
             @RequestParam(defaultValue = "10") int size,
             Model model) {
 
-        Page<MemberPurchase> purchasePage = memberPurchaseService.getAllMememberPurchases(PageRequest.of(page, size));
+        /*Page<MemberPurchase> purchasePage = memberPurchaseService.getAllMemberPurchases(PageRequest.of(page, size));
 
         model.addAttribute("purchases", purchasePage.getContent());
         model.addAttribute("currentPage", page);
@@ -37,20 +37,21 @@ public class MemberPurchaseViewController {
         model.addAttribute("size", size);
         model.addAttribute("hasNext", purchasePage.hasNext());
         model.addAttribute("hasPrevious", purchasePage.hasPrevious());
-
+*/
         return "purchaseList";
     }
 
     @GetMapping("/detail/{id}")
     public String getPurchaseDetails(@PathVariable Long id, Model model) {
-        MemberPurchase purchaseDetail = memberPurchaseService.getMememberPurchasesByID(id);
+        /*
+        MemberPurchase purchaseDetail = memberPurchaseService.getMemberPurchasesByID(id);
 
         if (purchaseDetail == null) {
             model.addAttribute("error", "Compra no encontrada");
             return "404";
         }
 
-        model.addAttribute("purchase", purchaseDetail);
+        model.addAttribute("purchase", purchaseDetail);*/
         return "purchaseDetail";
     }
 

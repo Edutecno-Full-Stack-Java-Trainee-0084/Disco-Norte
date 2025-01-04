@@ -9,13 +9,12 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "Seller")
+@Entity
 @Table(name = "seller")
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sellerId;
-
 
     @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
@@ -25,6 +24,6 @@ public class Seller {
 
     @ManyToOne
     @JoinColumn(name = "branch_id", nullable = false)
+    @ToString.Exclude  // Agregado para evitar ciclos
     private Branch branchId;
-
 }
