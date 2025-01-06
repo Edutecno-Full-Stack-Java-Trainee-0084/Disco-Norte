@@ -9,19 +9,18 @@ import java.util.List;
 
 @Getter
 @Setter
+@ToString(exclude = {"members", "purchases", "seller"})  // Excluimos todas las colecciones
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name = "branch")
 public class Branch {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "branch_id")
     private Long branchId;
 
-    @Column(name = "branch_description",length = 50, nullable = false)
+    @Column(name = "branch_description", length = 50, nullable = false)
     private String branchDescription;
 
     @OneToMany(mappedBy = "branch", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
