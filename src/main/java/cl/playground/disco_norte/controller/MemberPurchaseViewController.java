@@ -1,4 +1,5 @@
 package cl.playground.disco_norte.controller;
+import cl.playground.disco_norte.dto.MemberPurchaseResponseDTO;
 import cl.playground.disco_norte.service.MemberPurchaseService;
 import cl.playground.disco_norte.model.MemberPurchase;
 
@@ -27,7 +28,7 @@ public class MemberPurchaseViewController {
             @RequestParam(defaultValue = "10") int size,
             Model model) {
 
-        /*Page<MemberPurchase> purchasePage = memberPurchaseService.getAllMemberPurchases(PageRequest.of(page, size));
+        Page<MemberPurchaseResponseDTO> purchasePage = memberPurchaseService.getAllPurchases(PageRequest.of(page, size));
 
         model.addAttribute("purchases", purchasePage.getContent());
         model.addAttribute("currentPage", page);
@@ -37,7 +38,7 @@ public class MemberPurchaseViewController {
         model.addAttribute("size", size);
         model.addAttribute("hasNext", purchasePage.hasNext());
         model.addAttribute("hasPrevious", purchasePage.hasPrevious());
-*/
+
         return "purchaseList";
     }
 

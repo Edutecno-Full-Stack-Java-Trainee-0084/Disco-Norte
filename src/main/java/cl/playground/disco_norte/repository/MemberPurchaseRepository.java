@@ -9,64 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 
 @Repository
 public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, Long> {
-
-    @Query(value = """
-            SELECT
-                mp.member_purchase_id AS purchase_id,
-                CONCAT(m.first_name, ' ', m.last_name) AS member_name,
-                mt.membership_type_description AS membership_type,
-                a.album_title,
-                mp.quantity,
-                (mp.quantity * a.price) AS total_price,
-                b.branch_description AS branch
-            FROM
-                member_purchase mp
-            JOIN
-                member m ON mp.member_id = m.member_id
-            JOIN
-                membership_type mt ON m.membership_type_id = mt.membership_type_id
-            JOIN
-                album a ON mp.album_id = a.album_id
-            JOIN
-                branch b ON mp.branch_id = b.branch_id
-            ORDER BY
-                mp.member_purchase_id
-            LIMIT
-                10 OFFSET 0;
-            """, nativeQuery = true)
-    Page<MemberPurchase> findAllMemberPurchaseDetails(Pageable pageable);
-
-
-    @Query(value = """
-            SELECT\s
-                CONCAT(m.first_name, ' ', m.last_name) AS member_name,
-                m.email AS member_email,
-                mt.membership_type_description AS membership_type,
-                a.album_title,
-                a.artist_name,
-                a.price,
-                a.music_genre,
-                mp.quantity,
-                (mp.quantity * a.price) AS total_price,
-                b.branch_description AS branch
-            FROM\s
-                member_purchase mp
-            JOIN\s
-                member m ON mp.member_id = m.member_id
-            JOIN\s
-                membership_type mt ON m.membership_type_id = mt.membership_type_id
-            JOIN\s
-                album a ON mp.album_id = a.album_id
-            JOIN\s
-                branch b ON mp.branch_id = b.branch_id
-            WHERE\s
-                mp.member_purchase_id = :id;
-            """, nativeQuery = true)
-   MemberPurchase findMemberPurchaseDetailsById(@Param("id") Long id);
-
 
     /*
       MemberPurchase
@@ -77,8 +24,10 @@ public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, 
         @JoinColumn(name = "branch_id", nullable = false) FK
 
         member_name: member_id -> member_name
+        email: member_id -> email // NUEVO DATO PARA DETAILS
         membership_type_description: member_id -> membership_type_id -> membership_type_description
         album_title: album_id -> album_title
+        music_genre: album_id -> music_genre // NUEVO DATO PARA DETAILS
         quantity: quantity
         total_price: (album_id -> price * quantity)
         branch_description: branch_id -> branch_description
@@ -90,7 +39,7 @@ public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, 
             INNER JOIN member m ON mp.member_id = m.member_id
             INNER JOIN membership_type mt ON m.membership_type_id = mt.membership_type_id
             INNER JOIN album a ON mp.album_id = a.album_id
-            INNER JOIN branch b ON mp.branch_id = b.branch_id
+            INNER JOIN branch b ON mp.branch_id = b.branch_id                        
             ORDER BY mp.member_purchase_id DESC
             LIMIT :#{#pageable.pageSize} 
             OFFSET :#{#pageable.offset}
@@ -101,4 +50,17 @@ public interface MemberPurchaseRepository extends JpaRepository<MemberPurchase, 
             """,
             nativeQuery = true)
     Page<MemberPurchase> findAllPurchasesWithDetails(Pageable pageable);
+
+    @Query(value = """
+            SELECT 
+                mp.*
+            FROM member_purchase mp
+            INNER JOIN member m ON mp.member_id = m.member_id
+            INNER JOIN membership_type mt ON m.membership_type_id = mt.membership_type_id
+            INNER JOIN album a ON mp.album_id = a.album_id
+            INNER JOIN branch b ON mp.branch_id = b.branch_id 
+            WHERE mp.member_purchase_id = :purchaseId
+            """,
+            nativeQuery = true)
+    Optional<MemberPurchase> findPurchaseWithDetailsById(@Param("purchaseId") Long purchaseId);
 }

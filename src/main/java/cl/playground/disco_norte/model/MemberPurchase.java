@@ -18,17 +18,19 @@ public class MemberPurchase {
 
     @ToString.Include
     private String getMemberInfo() {
-        return String.format("Member: %s %s (%s)",
+        return String.format("Member: %s %s %s (%s)",
                 memberId.getFirstName(),
                 memberId.getLastName(),
+                memberId.getEmail(),
                 memberId.getMembership().getMembershipTypeDescription());
     }
 
     @ToString.Include
     private String getAlbumInfo() {
-        return String.format("Album: %s by %s ($%d)",
+        return String.format("Album: %s by %s, with genre %s and price ($%d)",
                 albumId.getAlbumTitle(),
                 albumId.getArtistName(),
+                albumId.getMusicGenre(),
                 albumId.getPrice());
     }
 
