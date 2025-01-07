@@ -1,4 +1,5 @@
 package cl.playground.disco_norte.controller;
+import cl.playground.disco_norte.dto.MemberPurchaseDetailsResponseDTO;
 import cl.playground.disco_norte.dto.MemberPurchaseResponseDTO;
 import cl.playground.disco_norte.service.MemberPurchaseService;
 import cl.playground.disco_norte.model.MemberPurchase;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.data.domain.Page;
+
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/purchases")
@@ -44,15 +47,15 @@ public class MemberPurchaseViewController {
 
     @GetMapping("/detail/{id}")
     public String getPurchaseDetails(@PathVariable Long id, Model model) {
-        /*
-        MemberPurchase purchaseDetail = memberPurchaseService.getMemberPurchasesByID(id);
 
-        if (purchaseDetail == null) {
+        Optional<MemberPurchaseDetailsResponseDTO> purchaseDetail = memberPurchaseService.getPurchase(id);
+
+        if (purchaseDetail.isEmpty()) {
             model.addAttribute("error", "Compra no encontrada");
             return "404";
         }
 
-        model.addAttribute("purchase", purchaseDetail);*/
+        model.addAttribute("purchase", purchaseDetail.get());
         return "purchaseDetail";
     }
 

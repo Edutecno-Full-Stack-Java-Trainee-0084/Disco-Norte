@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Member Purchase Details</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h1 class="text-center mb-4">Purchase Details</h1>
+
+    <!-- Purchase Information -->
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5>Purchase Information</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Purchase ID:</strong> <span th:text="${purchase.getPurchaseId()}"></span></p>
+            <p><strong>Branch Name:</strong> <span th:text="${purchase.getBranchName()}"></span></p>
+            <p><strong>Quantity:</strong> <span th:text="${purchase.getQuantity()}"></span></p>
+            <p><strong>Total Amount:</strong> $<span th:text="${purchase.getTotalAmount()}"></span></p>
+        </div>
+    </div>
+
+    <!-- Member Information -->
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white">
+            <h5>Member Information</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Full Name:</strong> <span th:text="${purchase.getMember().getFullName()}"></span></p>
+            <p><strong>Membership Type:</strong> <span th:text="${purchase.getMember().getMembershipType()}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${purchase.getMember().getEmail()}"></span></p>
+        </div>
+    </div>
+
+    <!-- Album Information -->
+    <div class="card">
+        <div class="card-header bg-info text-white">
+            <h5>Album Information</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Title:</strong> <span th:text="${purchase.getAlbum().getTitle()}"></span></p>
+            <p><strong>Artist:</strong> <span th:text="${purchase.getAlbum().getArtist()}"></span></p>
+            <p><strong>Gender:</strong> <span th:text="${purchase.getAlbum().getGender()}"></span></p>
+            <p><strong>Price:</strong> $<span th:text="${purchase.getAlbum().getPrice()}"></span></p>
+        </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="text-center mt-4">
+        <a href="/purchases" class="btn btn-secondary">Back to Home</a>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

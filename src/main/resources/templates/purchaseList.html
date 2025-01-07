@@ -11,6 +11,11 @@
 <div class="container mt-4">
     <h2 class="mb-4">Purchase List</h2>
 
+    <!-- Botón para crear una nueva compra -->
+    <div class="mb-3 text-end">
+        <button class="btn btn-success btn-sm">Create Purchase</button>
+    </div>
+
     <div class="card shadow-sm">
         <div class="card-body">
             <div class="table-responsive">
@@ -23,6 +28,7 @@
                         <th>Quantity Purchased</th>
                         <th>Total Price</th>
                         <th>Branch</th>
+                        <th>Actions</th> <!-- Columna para acciones -->
                     </tr>
                     </thead>
                     <tbody>
@@ -33,10 +39,18 @@
                         <td th:text="${purchase.quantity}"></td>
                         <td th:text="${purchase.totalAmount}"></td>
                         <td th:text="${purchase.branchName}"></td>
+                        <td>
+                            <!-- Botón para ver detalles -->
+                            <a th:href="@{/purchases/detail/{id}(id=${purchase.purchaseId})}"
+                               class="btn btn-primary btn-sm">View Details</a>
+                            <!-- Botón para editar -->
+                            <button class="btn btn-warning btn-sm">Update</button>
+                            <!-- Botón para eliminar -->
+                            <button class="btn btn-danger btn-sm">Delete</button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
-
             </div>
 
             <!-- Pagination -->
